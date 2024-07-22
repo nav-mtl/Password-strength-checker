@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Password Strength Checker</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <script>
+      // Function to copy the actual password to clipboard
+      function copyToClipboard() {
+        var copyText = document.getElementById("actualPassword");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
+        document.execCommand("copy");
+        alert("Password copied to clipboard!");
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <center>
+      <p>Written by <a href="https://www.linkedin.com/in/njot/" target="_blank">Navjot Singh</a></p>
+      </center>
+      <h1 class="mt-5">Password Strength Checker</h1>
+      <form method="POST" action="/">
+        <div class="form-group">
+          <label for="password">Enter Password:</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Check Strength</button>
+      </form>
+      {% if password %}
+      <h2 class="mt-5">Password:</h2>
+      <div class="input-group mb-3">
+        <div class="form-control" style="font-family: monospace;">
+          {{ '*' * password_length }} <!-- Display password as asterisks -->
+        </div>
+        <!-- Hidden input field to store the actual password for copy functionality -->
+        <input type="text" id="actualPassword" value="{{ password }}" style="position: absolute; left: -9999px;">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard()">Copy</button>
+        </div>
+      </div>
+      <ul class="list-group">
+        <!-- Display password strength criteria -->
+        <li class="list-group-item {{ 'list-group-item-success' if strength['length'] else 'list-group-item-danger' }}">At least 8 characters</li>
+        <li class="list-group-item {{ 'list-group-item-success' if strength['digit'] else 'list-group-item-danger' }}">Contains a digit</li>
+        <li class="list-group-item {{ 'list-group-item-success' if strength['upper'] else 'list-group-item-danger' }}">Contains an uppercase letter</li>
+        <li class="list-group-item {{ 'list-group-item-success' if strength['lower'] else 'list-group-item-danger' }}">Contains a lowercase letter</li>
+        <li class="list-group-item {{ 'list-group-item-success' if strength['special'] else 'list-group-item-danger' }}">Contains a special character</li>
+      </ul>
+      <h3 class="mt-5">Estimated time for a quantum computer to decrypt the password:</h3>
+      <p>{{ quantum_time }}</p>
+      {% endif %}
+    </div>
+  </body>
+</html>
