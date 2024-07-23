@@ -17,8 +17,8 @@ This is a simple web application that checks the strength of a password based on
 
 <ol>
     <li>Clone the repository:
-        <pre><code>git clone https://github.com/yourusername/password_strength_checker.git
-cd password_strength_checker
+        <pre><code>git clone https://github.com/nav-mtl/Password-strength-checker.git
+cd Password-strength-checker
         </code></pre>
     </li>
     <li>Install the required packages:
